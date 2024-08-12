@@ -8,5 +8,7 @@
     <p><strong>출판일:</strong> {{ book.publication_date|date:"Y-m-d" }}</p>
     <a href="{% url 'books:book_update' book.pk %}">도서 정보 수정</a>
     <br>
+    <a href="{% url 'books:book_delete' book.pk %}">도서 삭제</a> <!-- 삭제 링크 추가 -->
+    <br>
     <a href="{% url 'books:book_list' %}">도서 목록으로 돌아가기</a>
 {% endblock %}
