@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>도서 목록</title>
+</head>
+<body>
+<h1>도서 목록</h1>
+<ul>
+    {% for book in books %}
+        <li>
+            <strong>{{ book.title }}</strong> - {{ book.author }} ({{ book.publication_date }})
+        </li>
+    {% endfor %}
+</ul>
+</body>
+</html>
