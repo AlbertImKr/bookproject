@@ -2,6 +2,7 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
+from django.views.generic.edit import UpdateView
 
 from .forms import BookForm
 from .models import Book
@@ -27,3 +28,12 @@ class BookCreateView(CreateView):
     form_class = BookForm
     template_name = 'books/book_form.html'
     success_url = reverse_lazy('books:book_list')
+
+
+class BookUpdateView(UpdateView):
+    model = Book
+    form_class = BookForm
+    template_name = 'books/book_form.html'
+
+    def get_success_url(self):
+        return reverse_lazy('books:book_detail', kwargs={'pk': self.object.pk})
