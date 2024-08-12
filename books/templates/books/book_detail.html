@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ book.title }} - 상세 정보</title>
+</head>
+<body>
+<h1>{{ book.title }}</h1>
+<p><strong>저자:</strong> {{ book.author }}</p>
+<p><strong>출판일:</strong> {{ book.publication_date }}</p>
+<a href="{% url 'books:book_list' %}">도서 목록으로 돌아가기</a>
+</body>
+</html>
