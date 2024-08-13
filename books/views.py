@@ -7,6 +7,7 @@ from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
 
 from .forms import BookForm
+from .forms import CustomUserCreationForm
 from .models import Book
 
 
@@ -69,3 +70,9 @@ class BookDeleteView(LoginRequiredMixin, DeleteView):
     model = Book
     template_name = 'books/book_confirm_delete.html'
     success_url = reverse_lazy('books:book_list')
+
+
+class SignUpView(CreateView):
+    form_class = CustomUserCreationForm
+    template_name = 'registration/signup.html'
+    success_url = reverse_lazy('login')

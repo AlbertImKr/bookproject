@@ -1,10 +1,10 @@
 from django.urls import path
 
 from .views import BookCreateView
+from .views import BookDeleteView
 from .views import BookDetailView
 from .views import BookListView
 from .views import BookUpdateView
-from .views import BookDeleteView
 
 app_name = 'books'
 urlpatterns = [

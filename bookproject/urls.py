@@ -23,6 +23,7 @@ from django.urls import include
 from django.urls import path
 
 from bookproject.views import MainView
+from books.views import SignUpView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,6 +33,7 @@ urlpatterns = [
                                      redirect_authenticated_user=True),
          name='login'),
     path('logout/', LogoutView.as_view(next_page='main'), name='logout'),
+    path('signup/', SignUpView.as_view(), name='signup'),
 ]
 
 if settings.DEBUG:
