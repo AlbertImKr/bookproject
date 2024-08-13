@@ -72,7 +72,7 @@ class BookDeleteView(PermissionRequiredMixin, DeleteView):
     model = Book
     template_name = 'books/book_confirm_delete.html'
     success_url = reverse_lazy('books:book_list')
-    permission_required = 'books/delete_book'
+    permission_required = 'books.delete_book'
 
 
 class SignUpView(CreateView):
