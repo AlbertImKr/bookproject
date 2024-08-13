@@ -5,10 +5,12 @@ from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView
 from django.views.generic.edit import DeleteView
 from django.views.generic.edit import UpdateView
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from .forms import BookForm
 from .forms import CustomUserCreationForm
 from .models import Book
+from .mixins import GroupRequiredMixin
 
 
 class BookListView(ListView):
@@ -57,7 +59,7 @@ class BookCreateView(LoginRequiredMixin, CreateView):
     success_url = reverse_lazy('books:book_list')
 
 
-class BookUpdateView(LoginRequiredMixin, UpdateView):
+class BookUpdateView(GroupRequiredMixin, UpdateView):
     model = Book
     form_class = BookForm
     template_name = 'books/book_form.html'
@@ -66,10 +68,11 @@ class BookUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('books:book_detail', kwargs={'pk': self.object.pk})
 
 
-class BookDeleteView(LoginRequiredMixin, DeleteView):
+class BookDeleteView(PermissionRequiredMixin, DeleteView):
     model = Book
     template_name = 'books/book_confirm_delete.html'
     success_url = reverse_lazy('books:book_list')
+    permission_required = 'books/delete_book'
 
 
 class SignUpView(CreateView):
