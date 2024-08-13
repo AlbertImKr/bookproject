@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
@@ -35,7 +36,8 @@ class BookListView(ListView):
         if genre:
             queryset = queryset.filter(genre=genre)  # 장르로 필터링
         if year:
-            queryset = queryset.filter(publication_date__year=year)  # 출판 연도로 필터링
+            queryset = queryset.filter(
+                    publication_date__year=year)  # 출판 연도로 필터링
 
         return queryset
 
@@ -47,14 +49,14 @@ class BookDetailView(DetailView):
     success_url = reverse_lazy('books:book_list')
 
 
-class BookCreateView(CreateView):
+class BookCreateView(LoginRequiredMixin, CreateView):
     model = Book
     form_class = BookForm
     template_name = 'books/book_form.html'
     success_url = reverse_lazy('books:book_list')
 
 
-class BookUpdateView(UpdateView):
+class BookUpdateView(LoginRequiredMixin, UpdateView):
     model = Book
     form_class = BookForm
     template_name = 'books/book_form.html'
@@ -63,7 +65,7 @@ class BookUpdateView(UpdateView):
         return reverse_lazy('books:book_detail', kwargs={'pk': self.object.pk})
 
 
-class BookDeleteView(DeleteView):
+class BookDeleteView(LoginRequiredMixin, DeleteView):
     model = Book
     template_name = 'books/book_confirm_delete.html'
     success_url = reverse_lazy('books:book_list')
