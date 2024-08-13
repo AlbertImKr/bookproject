@@ -1,4 +1,6 @@
+from django.contrib.auth.models import User
 from django.db import models
+from django.utils import timezone
 
 
 class Book(models.Model):
@@ -16,3 +18,17 @@ class Book(models.Model):
     class Meta:
         verbose_name = '도서'
         verbose_name_plural = '도서들'
+
+
+class Rental(models.Model):
+    book = models.ForeignKey(Book, on_delete=models.CASCADE, verbose_name='도서')
+    user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='사용자')
+    rental_date = models.DateField(auto_now_add=True, verbose_name='대여일')
+    return_date = models.DateField(verbose_name='반납일', null=True, blank=True)
+
+    def __str__(self):
+        return f"{self.user.username}님의 {self.book.title} 대여함"
+
+    class Meta:
+        verbose_name = '대여'
+        verbose_name_plural = '대여들'
