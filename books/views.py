@@ -14,7 +14,30 @@ class BookListView(ListView):
     template_name = 'books/book_list.html'
     context_object_name = 'books'
     ordering = ['-publication_date']
-    paginate_by = 1
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+
+        query = self.request.GET.get('q')
+        if query:
+            queryset = Book.objects.filter(title__icontains=query)
+
+        sort = self.request.GET.get('sort')
+        if sort == 'title':
+            queryset = queryset.order_by('title')
+        elif sort == 'author':
+            queryset = queryset.order_by('author')
+        elif sort == 'date':
+            queryset = queryset.order_by('publication_date')
+
+        genre = self.request.GET.get('genre')
+        year = self.request.GET.get('year')
+        if genre:
+            queryset = queryset.filter(genre=genre)  # 장르로 필터링
+        if year:
+            queryset = queryset.filter(publication_date__year=year)  # 출판 연도로 필터링
+
+        return queryset
 
 
 class BookDetailView(DetailView):
